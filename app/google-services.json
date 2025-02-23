@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "761995603687",
+    "project_id": "application1-db062",
+    "storage_bucket": "application1-db062.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761995603687:android:003a9906e7afa19122fc42",
+        "android_client_info": {
+          "package_name": "com.example.calories_caculator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdHNweCwbbLmtZOHzfaEtfqk22I-fZNSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
