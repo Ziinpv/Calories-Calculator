@@ -160,6 +160,10 @@
                     android:layout_marginTop="16dp"
                     android:gravity="end">
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 103c819 (Add stats view and still fixing Workout API)
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/workoutButton"
                         android:layout_width="wrap_content"
@@ -171,6 +175,22 @@
                         app:tint="#FFFFFF" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
+<<<<<<< HEAD
+=======
+                        android:id="@+id/statusBotton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="end|bottom"
+                        android:layout_marginBottom="16dp"
+                        android:src="@android:drawable/ic_menu_info_details"
+                        app:backgroundTint="#4CAF50"
+                        app:fabSize="mini"
+                        app:tint="#FFFFFF" />
+
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+>>>>>>> 103c819 (Add stats view and still fixing Workout API)
                         android:id="@+id/addFoodButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

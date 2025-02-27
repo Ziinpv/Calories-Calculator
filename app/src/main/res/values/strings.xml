@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Calories-Caculator</string>
+<<<<<<< HEAD
 </resources>
+=======
+    <string-array name="time_options">
+        <item>Hôm nay</item>
+        <item>Tuần này</item>
+        <item>Tháng này</item>
+        <item>Chọn ngày</item>
+    </string-array>
+
+</resources>
+>>>>>>> 103c819 (Add stats view and still fixing Workout API)
