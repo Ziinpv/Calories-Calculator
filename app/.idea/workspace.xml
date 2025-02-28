@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b49db13b-d6a2-4e3e-99e5-e019e085f269" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/calories_caculator/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/calories_caculator/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/calories_caculator/Meal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/calories_caculator/Meal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/calories_caculator/MealAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/calories_caculator/MealAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/calories_caculator/WorkoutActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/calories_caculator/WorkoutActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/calories_caculator/WorkoutAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/calories_caculator/WorkoutAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/calories_caculator/WorkoutVideo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/calories_caculator/WorkoutVideo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_workout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_workout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/item_workout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/item_workout.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2tUjPDwQxeUA4rFxEytQRwJbVuc" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b49db13b-d6a2-4e3e-99e5-e019e085f269" name="Changes" comment="" />
+      <created>1740413521921</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1740413521921</updated>
+    </task>
+    <servers />
+  </component>
+</project>

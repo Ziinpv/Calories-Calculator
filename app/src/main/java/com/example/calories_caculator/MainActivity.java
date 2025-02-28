@@ -1,16 +1,29 @@
 package com.example.calories_caculator;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.calories_caculator.StatsBottomSheet;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +32,19 @@ public class MainActivity extends AppCompatActivity {
     private EditText weightInput;
     private TextView bmiResult;
     private FloatingActionButton addFoodButton;
+    private FloatingActionButton workoutButton;
+
+    private FloatingActionButton statusButton;
+
+
+    private ListView mealsList;
+    private TextView totalCalories;
+    private TextView caloriesCount;
+    private CircularProgressIndicator caloriesProgress;
+    private List<Meal> meals;
+    private MealAdapter mealAdapter;
+    private static final int MAX_CALORIES = 3000;
+    private static final int WARNING_CALORIES = 1750;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +55,31 @@ public class MainActivity extends AppCompatActivity {
         heightInput = findViewById(R.id.heightInput);
         weightInput = findViewById(R.id.weightInput);
         bmiResult = findViewById(R.id.bmiResult);
-        addFoodButton = findViewById(R.id.addFood);
+        addFoodButton = findViewById(R.id.addFoodButton);
+        workoutButton = findViewById(R.id.workoutButton);
+
+
+        statusButton = findViewById(R.id.statusBotton);
+
+        mealsList = findViewById(R.id.mealsList);
+        totalCalories = findViewById(R.id.totalCalories);
+        caloriesCount = findViewById(R.id.caloriesCount);
+        caloriesProgress = findViewById(R.id.caloriesProgress);
+
+        // Initialize meals list and adapter
+        meals = new ArrayList<>();
+        mealAdapter = new MealAdapter(meals);
+        mealsList.setAdapter(mealAdapter);
 
         // Add text change listeners for BMI calculation
         TextWatcher textWatcher = new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -50,6 +92,19 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up add food button
         addFoodButton.setOnClickListener(v -> showFoodSelectionDialog());
+
+        // Set up workout button
+        workoutButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, WorkoutActivity.class);
+            startActivity(intent);
+        });
+
+        // Set up status button (Xem thống kê calo)
+        statusButton.setOnClickListener(v -> {
+            StatsBottomSheet statsBottomSheet = new StatsBottomSheet();
+            statsBottomSheet.show(getSupportFragmentManager(), "StatsBottomSheet");
+        });
+
     }
 
     private void showFoodSelectionDialog() {
@@ -60,15 +115,51 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = dialog.findViewById(R.id.foodRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<Food> foodList = getSampleFoodList(); // Replace with your actual food data
+        List<Food> foodList = getSampleFoodList();
         FoodAdapter adapter = new FoodAdapter(foodList, food -> {
-            // Handle food selection
+            addOrUpdateMeal(food);
+            updateTotalCalories();
             dialog.dismiss();
-            // Add the selected food to your meals list
         });
 
         recyclerView.setAdapter(adapter);
         dialog.show();
+    }
+
+    private void addOrUpdateMeal(Food food) {
+        // Check if meal already exists
+        boolean mealExists = false;
+        for (Meal meal : meals) {
+            if (meal.getName().equals(food.getName())) {
+                meal.incrementQuantity();
+                mealExists = true;
+                break;
+            }
+        }
+
+        // If meal doesn't exist, add new meal
+        if (!mealExists) {
+            meals.add(new Meal(food.getName(), 1, food.getCalories(), food.getImageUrl()));
+        }
+
+        mealAdapter.notifyDataSetChanged();
+    }
+
+    private void updateTotalCalories() {
+        int total = mealAdapter.getTotalCalories();
+        totalCalories.setText("TOTAL: " + total + " kcal");
+
+        // Update progress and color based on calories
+        caloriesProgress.setProgress(total);
+        caloriesCount.setText(total + "/" + MAX_CALORIES);
+
+        if (total >= MAX_CALORIES) {
+            caloriesProgress.setIndicatorColor(getResources().getColor(android.R.color.holo_red_dark));
+        } else if (total >= WARNING_CALORIES) {
+            caloriesProgress.setIndicatorColor(getResources().getColor(android.R.color.holo_orange_dark));
+        } else {
+            caloriesProgress.setIndicatorColor(getResources().getColor(android.R.color.holo_green_dark));
+        }
     }
 
     private List<Food> getSampleFoodList() {

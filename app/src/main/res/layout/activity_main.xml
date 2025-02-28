@@ -72,88 +72,122 @@
             android:textColor="#8D99AE" />
     </LinearLayout>
 
-    <!-- Main Content Card -->
-    <androidx.cardview.widget.CardView
+    <!-- Scrollable Content -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
-        app:cardBackgroundColor="#FFFFFF"
-        app:cardCornerRadius="16dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/calendarHeader">
 
-        <LinearLayout
+        <!-- Main Content Card -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="634dp"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp">
 
-            <!-- Circular Progress -->
-            <FrameLayout
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:id="@+id/caloriesProgress"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:progress="65"
-                    app:indicatorColor="#4CAF50"
-                    app:indicatorSize="200dp"
-                    app:trackColor="#E0E0E0"
-                    app:trackThickness="8dp" />
+                <!-- Circular Progress -->
+                <FrameLayout
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center">
 
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/caloriesProgress"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:max="3000"
+                        android:progress="0"
+                        app:indicatorColor="#4CAF50"
+                        app:indicatorSize="200dp"
+                        app:trackColor="#E0E0E0"
+                        app:trackThickness="8dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ĐÃ NẠP"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/caloriesCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="0/3000" />
+                    </LinearLayout>
+                </FrameLayout>
+
+                <!-- Calories Bar -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="ĐÃ NẠP"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
+                    android:layout_marginTop="16dp"
+                    android:text="LƯỢNG CALORIES TỐI THIỂU CHO MỘT NGÀY"
+                    android:textSize="14sp" />
 
-            <!-- Calories Bar -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="LƯỢNG CALORIES TỐI THIỂU CHO MỘT NGÀY"
-                android:textSize="14sp" />
+                <ProgressBar
+                    android:id="@+id/caloriesBar"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:max="3000"
+                    android:progress="0"
+                    android:progressTint="#4CAF50" />
 
-            <ProgressBar
-                android:id="@+id/caloriesBar"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:progress="65"
-                android:progressTint="#4CAF50" />
-
-            <!-- Meals Section -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="227dp"
-                android:layout_marginTop="16dp"
-                android:orientation="vertical">
-
+                <!-- Action Buttons -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="16dp"
+                    android:gravity="end">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="BỮA ĂN"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/addFood"
+                        android:id="@+id/workoutButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:src="@android:drawable/ic_media_play"
+                        app:backgroundTint="#4CAF50"
+                        app:fabSize="mini"
+                        app:tint="#FFFFFF" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+                        android:id="@+id/statusBotton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="end|bottom"
+                        android:layout_marginBottom="16dp"
+                        android:src="@android:drawable/ic_menu_info_details"
+                        app:backgroundTint="#4CAF50"
+                        app:fabSize="mini"
+                        app:tint="#FFFFFF" />
+
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+                        android:id="@+id/addFoodButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@android:drawable/ic_input_add"
@@ -162,103 +196,117 @@
                         app:tint="#FFFFFF" />
                 </LinearLayout>
 
-                <ListView
-                    android:id="@+id/mealsList"
+                <!-- Meals Section -->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1"
-                    android:divider="@null"
-                    android:dividerHeight="0dp" />
-
-                <TextView
-                    android:id="@+id/totalCalories"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="8dp"
-                    android:text="TOTAL: 1500 kcal"
-                    android:textColor="#2B2D42"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="BỮA ĂN"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <ListView
+                        android:id="@+id/mealsList"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="8dp"
+                        android:divider="@null"
+                        android:dividerHeight="0dp" />
+
+                    <TextView
+                        android:id="@+id/totalCalories"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="8dp"
+                        android:text="TOTAL: 0 kcal"
+                        android:textColor="#2B2D42"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Stats Section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="HEIGHT (cm):"
+                            android:textColor="#2B2D42"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/heightInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:hint="170"
+                            android:inputType="numberDecimal"
+                            android:textColor="#2B2D42" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="WEIGHT (kg):"
+                            android:textColor="#2B2D42"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/weightInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:hint="60"
+                            android:inputType="numberDecimal"
+                            android:textColor="#2B2D42" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="BMI:"
+                            android:textColor="#2B2D42"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/bmiResult"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#FF5722"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
-
-            <!-- Stats Section -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="HEIGHT (cm):"
-                        android:textColor="#2B2D42"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/heightInput"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:hint="170"
-                        android:inputType="numberDecimal"
-                        android:textColor="#2B2D42" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="WEIGHT (kg):"
-                        android:textColor="#2B2D42"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/weightInput"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:hint="60"
-                        android:inputType="numberDecimal"
-                        android:textColor="#2B2D42" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="BMI:"
-                        android:textColor="#2B2D42"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/bmiResult"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#FF5722"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
