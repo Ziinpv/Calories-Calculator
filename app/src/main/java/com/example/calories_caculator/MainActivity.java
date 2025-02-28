@@ -9,13 +9,11 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-<<<<<<< HEAD
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
-=======
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,7 +23,7 @@ import com.example.calories_caculator.StatsBottomSheet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
->>>>>>> 103c819 (Add stats view and still fixing Workout API)
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView bmiResult;
     private FloatingActionButton addFoodButton;
     private FloatingActionButton workoutButton;
-<<<<<<< HEAD
-=======
+
     private FloatingActionButton statusButton;
->>>>>>> 103c819 (Add stats view and still fixing Workout API)
+
+
     private ListView mealsList;
     private TextView totalCalories;
     private TextView caloriesCount;
@@ -59,10 +57,10 @@ public class MainActivity extends AppCompatActivity {
         bmiResult = findViewById(R.id.bmiResult);
         addFoodButton = findViewById(R.id.addFoodButton);
         workoutButton = findViewById(R.id.workoutButton);
-<<<<<<< HEAD
-=======
+
+
         statusButton = findViewById(R.id.statusBotton);
->>>>>>> 103c819 (Add stats view and still fixing Workout API)
+
         mealsList = findViewById(R.id.mealsList);
         totalCalories = findViewById(R.id.totalCalories);
         caloriesCount = findViewById(R.id.caloriesCount);
@@ -76,10 +74,12 @@ public class MainActivity extends AppCompatActivity {
         // Add text change listeners for BMI calculation
         TextWatcher textWatcher = new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -98,15 +98,13 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, WorkoutActivity.class);
             startActivity(intent);
         });
-<<<<<<< HEAD
-=======
 
         // Set up status button (Xem thống kê calo)
         statusButton.setOnClickListener(v -> {
             StatsBottomSheet statsBottomSheet = new StatsBottomSheet();
             statsBottomSheet.show(getSupportFragmentManager(), "StatsBottomSheet");
         });
->>>>>>> 103c819 (Add stats view and still fixing Workout API)
+
     }
 
     private void showFoodSelectionDialog() {
@@ -206,8 +204,4 @@ public class MainActivity extends AppCompatActivity {
             return "Béo phì";
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 103c819 (Add stats view and still fixing Workout API)

@@ -4,11 +4,13 @@ public class WorkoutVideo {
     private String title;
     private String videoId;
     private String description;
+    private String thumbnailUrl;
 
-    public WorkoutVideo(String title, String videoId, String description) {
+    public WorkoutVideo(String title, String videoId, String description, String thumbnailUrl) {
         this.title = title;
         this.videoId = videoId;
         this.description = description;
+        this.thumbnailUrl = thumbnailUrl;
     }
 
     public String getTitle() {
@@ -21,5 +23,9 @@ public class WorkoutVideo {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
     }
 }
