@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -14,20 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.example.calories_caculator.StatsBottomSheet;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private FirebaseFirestore db;
     private EditText heightInput;
     private EditText weightInput;
     private TextView bmiResult;
@@ -104,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
             StatsBottomSheet statsBottomSheet = new StatsBottomSheet();
             statsBottomSheet.show(getSupportFragmentManager(), "StatsBottomSheet");
         });
+        db = FirebaseFirestore.getInstance();
 
     }
 
@@ -115,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = dialog.findViewById(R.id.foodRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<Food> foodList = getSampleFoodList();
+        List<Food> foodList = new ArrayList<>();
         FoodAdapter adapter = new FoodAdapter(foodList, food -> {
             addOrUpdateMeal(food);
             updateTotalCalories();
@@ -123,6 +121,22 @@ public class MainActivity extends AppCompatActivity {
         });
 
         recyclerView.setAdapter(adapter);
+        db.collection("foods")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots){
+                        String name = document.getString("Name");
+                        String imgUrl = document.getString("ImgUrl");
+                        Long caloriesLong = document.getLong("Calories");
+                        int calories = (caloriesLong!=null)? caloriesLong.intValue():0;
+
+                        foodList.add(new Food(name, calories, imgUrl));
+                    }
+                    adapter.notifyDataSetChanged();
+                })
+                .addOnFailureListener(e->{
+                    Log.e("Firebase", "Lỗi khi lấy dữ liệu");
+                });
         dialog.show();
     }
 
@@ -162,14 +176,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private List<Food> getSampleFoodList() {
-        List<Food> foodList = new ArrayList<>();
-        foodList.add(new Food("Cơm gà", 450, "https://example.com/com-ga.jpg"));
-        foodList.add(new Food("Phở bò", 400, "https://example.com/pho-bo.jpg"));
-        foodList.add(new Food("Bún chả", 550, "https://example.com/bun-cha.jpg"));
-        foodList.add(new Food("Bánh mì", 350, "https://example.com/banh-mi.jpg"));
-        return foodList;
-    }
+//    private List<Food> getSampleFoodList() {
+//        List<Food> foodList = new ArrayList<>();
+//        foodList.add(new Food("Cơm gà", 450, "https://example.com/com-ga.jpg"));
+//        foodList.add(new Food("Phở bò", 400, "https://example.com/pho-bo.jpg"));
+//        foodList.add(new Food("Bún chả", 550, "https://example.com/bun-cha.jpg"));
+//        foodList.add(new Food("Bánh mì", 350, "https://example.com/banh-mi.jpg"));
+//        return foodList;
+//    }
 
     private void calculateBMI() {
         String heightStr = heightInput.getText().toString();
