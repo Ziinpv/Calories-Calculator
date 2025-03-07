@@ -1,4 +1,4 @@
-package com.example.calories_caculator;
+package com.example.calories_caculator.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,6 +6,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.calories_caculator.model.Meal;
+import com.example.calories_caculator.R;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 

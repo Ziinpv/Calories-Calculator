@@ -1,4 +1,4 @@
-package com.example.calories_caculator;
+package com.example.calories_caculator.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -13,11 +13,17 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.calories_caculator.model.Food;
+import com.example.calories_caculator.adapter.FoodAdapter;
+import com.example.calories_caculator.model.Meal;
+import com.example.calories_caculator.adapter.MealAdapter;
+import com.example.calories_caculator.R;
+import com.example.calories_caculator.StatsBottomSheet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.example.calories_caculator.StatsBottomSheet;
 
 
 import java.util.ArrayList;

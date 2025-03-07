@@ -1,4 +1,4 @@
-package com.example.calories_caculator;
+package com.example.calories_caculator.model;
 
 public class WorkoutVideo {
     private String title;

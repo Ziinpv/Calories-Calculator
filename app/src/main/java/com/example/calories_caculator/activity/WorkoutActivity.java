@@ -1,9 +1,14 @@
-package com.example.calories_caculator;
+package com.example.calories_caculator.activity;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.calories_caculator.R;
+import com.example.calories_caculator.adapter.WorkoutAdapter;
+import com.example.calories_caculator.model.WorkoutVideo;
+
 import java.util.ArrayList;
 import java.util.List;
 
