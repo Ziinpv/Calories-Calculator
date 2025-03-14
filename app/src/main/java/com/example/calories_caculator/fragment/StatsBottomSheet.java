@@ -1,4 +1,4 @@
-package com.example.calories_caculator;
+package com.example.calories_caculator.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;

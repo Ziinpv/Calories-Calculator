@@ -19,7 +19,7 @@ import com.example.calories_caculator.adapter.FoodAdapter;
 import com.example.calories_caculator.model.Meal;
 import com.example.calories_caculator.adapter.MealAdapter;
 import com.example.calories_caculator.R;
-import com.example.calories_caculator.StatsBottomSheet;
+import com.example.calories_caculator.fragment.StatsBottomSheet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
