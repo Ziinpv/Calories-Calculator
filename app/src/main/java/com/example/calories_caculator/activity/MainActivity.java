@@ -8,12 +8,14 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.calories_caculator.fragment.UserInfoDialogFragment;
 import com.example.calories_caculator.model.Food;
 import com.example.calories_caculator.adapter.FoodAdapter;
 import com.example.calories_caculator.model.Meal;
@@ -108,6 +110,11 @@ public class MainActivity extends AppCompatActivity {
             statsBottomSheet.show(getSupportFragmentManager(), "StatsBottomSheet");
         });
         db = FirebaseFirestore.getInstance();
+        ImageView ivUserInfo = findViewById(R.id.imgUserAvatar);
+        ivUserInfo.setOnClickListener(v -> {
+            UserInfoDialogFragment dialog = new UserInfoDialogFragment();
+            dialog.show(getSupportFragmentManager(), "UserInfoDialog");
+        });
 
     }
 
@@ -131,9 +138,9 @@ public class MainActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots){
-                        String name = document.getString("Name");
-                        String imgUrl = document.getString("ImgUrl");
-                        Long caloriesLong = document.getLong("Calories");
+                        String name = document.getString("name");
+                        String imgUrl = document.getString("imgurl");
+                        Long caloriesLong = document.getLong("calories");
                         int calories = (caloriesLong!=null)? caloriesLong.intValue():0;
 
                         foodList.add(new Food(name, calories, imgUrl));

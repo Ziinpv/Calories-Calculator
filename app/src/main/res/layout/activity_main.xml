@@ -72,6 +72,7 @@
             android:textColor="#8D99AE" />
     </LinearLayout>
 
+
     <!-- Scrollable Content -->
     <ScrollView
         android:layout_width="match_parent"
@@ -92,49 +93,64 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <!-- Circular Progress -->
-                <FrameLayout
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_gravity="center">
+                    <!-- Circular Progress -->
 
-                    <com.google.android.material.progressindicator.CircularProgressIndicator
-                        android:id="@+id/caloriesProgress"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:max="3000"
-                        android:progress="0"
-                        app:indicatorColor="#4CAF50"
-                        app:indicatorSize="200dp"
-                        app:trackColor="#E0E0E0"
-                        app:trackThickness="8dp" />
-
-                    <LinearLayout
+                    <ImageView
+                        android:id="@+id/imgUserAvatar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_user" />
+
+                    <FrameLayout
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
                         android:layout_gravity="center"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:layout_marginLeft="50dp">
 
-                        <TextView
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:id="@+id/caloriesProgress"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:max="3000"
+                            android:progress="0"
+                            app:indicatorColor="#4CAF50"
+                            app:indicatorSize="200dp"
+                            app:trackColor="#E0E0E0"
+                            app:trackThickness="8dp" />
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="ĐÃ NẠP"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/caloriesCount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="0/3000" />
-                    </LinearLayout>
-                </FrameLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ĐÃ NẠP"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
 
+                            <TextView
+                                android:id="@+id/caloriesCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:text="0/3000" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </LinearLayout>
                 <!-- Calories Bar -->
                 <TextView
                     android:layout_width="wrap_content"
