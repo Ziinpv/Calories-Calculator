@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.retrofit.gson)
 
     implementation(libs.androidyoutubeplayer)
+    implementation(libs.material)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

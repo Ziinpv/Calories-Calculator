@@ -131,9 +131,9 @@ public class MainActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots){
-                        String name = document.getString("Name");
-                        String imgUrl = document.getString("ImgUrl");
-                        Long caloriesLong = document.getLong("Calories");
+                        String name = document.getString("name");
+                        String imgUrl = document.getString("imgurl");
+                        Long caloriesLong = document.getLong("calories");
                         int calories = (caloriesLong!=null)? caloriesLong.intValue():0;
 
                         foodList.add(new Food(name, calories, imgUrl));
