@@ -22,29 +22,22 @@ import com.example.calories_caculator.model.Meal;
 import com.example.calories_caculator.adapter.MealAdapter;
 import com.example.calories_caculator.R;
 import com.example.calories_caculator.fragment.StatsBottomSheet;
+import com.example.calories_caculator.firebase.FirestoreHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private FirebaseFirestore db;
-    private EditText heightInput;
-    private EditText weightInput;
-    private TextView bmiResult;
-    private FloatingActionButton addFoodButton;
-    private FloatingActionButton workoutButton;
-
-    private FloatingActionButton statusButton;
-
-
+    private FirestoreHelper firestoreHelper;
+    private EditText heightInput,weightInput;
+    private TextView bmiResult,totalCalories,caloriesCount;
+    private FloatingActionButton addFoodButton,workoutButton,statusButton;
     private ListView mealsList;
-    private TextView totalCalories;
-    private TextView caloriesCount;
+    private ImageView imgUserProfile;
+    private String userId;
     private CircularProgressIndicator caloriesProgress;
     private List<Meal> meals;
     private MealAdapter mealAdapter;
@@ -70,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         totalCalories = findViewById(R.id.totalCalories);
         caloriesCount = findViewById(R.id.caloriesCount);
         caloriesProgress = findViewById(R.id.caloriesProgress);
+
+        imgUserProfile = findViewById(R.id.imgUserAvatar);
 
         // Initialize meals list and adapter
         meals = new ArrayList<>();
@@ -103,18 +98,31 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, WorkoutActivity.class);
             startActivity(intent);
         });
-
+//        ImageView ivUserInfo = findViewById(R.id.imgUserAvatar);
+//        ivUserInfo.setOnClickListener(v -> {
+//            UserInfoDialogFragment dialog = new UserInfoDialogFragment();
+//            dialog.show(getSupportFragmentManager(), "UserInfoDialog");
+//        });
+//        //ref
         // Set up status button (Xem thống kê calo)
         statusButton.setOnClickListener(v -> {
             StatsBottomSheet statsBottomSheet = new StatsBottomSheet();
             statsBottomSheet.show(getSupportFragmentManager(), "StatsBottomSheet");
         });
-        db = FirebaseFirestore.getInstance();
-        ImageView ivUserInfo = findViewById(R.id.imgUserAvatar);
-        ivUserInfo.setOnClickListener(v -> {
-            UserInfoDialogFragment dialog = new UserInfoDialogFragment();
-            dialog.show(getSupportFragmentManager(), "UserInfoDialog");
+        firestoreHelper = new FirestoreHelper();
+//reshUserData();
+//        imgUserProfile.setOnClickListener(v -> {
+//            UserInfoDialogFragment bottomSheet = new UserInfoDialogFragment(userId);
+//            bottomSheet.show(getSupportFragmentManager(), "UserInfoBottomSheet");
+//        });
+        ImageView imageView = findViewById(R.id.imgUserAvatar);
+
+        imageView.setOnClickListener(v -> {
+            // Giả sử userId của người dùng là "user123"
+            UserInfoDialogFragment bottomSheet = UserInfoDialogFragment.newInstance("user1");
+            bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
         });
+
 
     }
 
@@ -134,22 +142,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         recyclerView.setAdapter(adapter);
-        db.collection("foods")
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots){
-                        String name = document.getString("name");
-                        String imgUrl = document.getString("imgurl");
-                        Long caloriesLong = document.getLong("calories");
-                        int calories = (caloriesLong!=null)? caloriesLong.intValue():0;
+        firestoreHelper.addFoodList(new FirestoreHelper.FoodListCallback() {
+            @Override
+            public void onSuccess(List<Food> foods) {
+                foodList.clear();
+                foodList.addAll(foods);
+                adapter.notifyDataSetChanged();
+            }
 
-                        foodList.add(new Food(name, calories, imgUrl));
-                    }
-                    adapter.notifyDataSetChanged();
-                })
-                .addOnFailureListener(e->{
-                    Log.e("Firebase", "Lỗi khi lấy dữ liệu");
-                });
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("Firebase", "Lỗi khi lấy dữ liệu", e);
+            }
+        });
+
         dialog.show();
     }
 
@@ -231,4 +237,22 @@ public class MainActivity extends AppCompatActivity {
             return "Béo phì";
         }
     }
+//    public void refreshUserData() {
+//        firestoreHelper.getUserInfo(userId, user -> {
+//            if (user != null) {
+//                // Cập nhật UI với dữ liệu mới
+//                txtAge.setText(String.valueOf(user.getAge()));
+//                txtWeight.setText(String.valueOf(user.getWeight()));
+//                txtHeight.setText(String.valueOf(user.getHeight()));
+//                txtActivityLevel.setText(user.getActivityLevel());
+//            } else {
+//                Log.e("MainActivity", "Không tìm thấy thông tin user!");
+//            }
+//        });
+//    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        refreshUserData();
+//    }
 }

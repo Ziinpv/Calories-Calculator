@@ -49,7 +49,7 @@
                     android:id="@+id/tvName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nguyễn Văn A"
+                    android:text="Tên User"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -61,32 +61,32 @@
                 android:layout_marginBottom="8dp">
 
                 <TextView
+                    android:id="@+id/tvAge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tuổi: "
+                    android:text="Tuổi:"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
                     android:layout_marginEnd="8dp" />
 
-                <TextView
-                    android:id="@+id/tvAge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="25"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp"
-                    android:visibility="visible" />
+<!--                <TextView-->
+<!--                    android:id="@+id/tvAge"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="25"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:visibility="visible" />-->
 
                 <EditText
                     android:id="@+id/etAge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp"
                     android:inputType="number"
                     android:background="@drawable/edit_background_user"
                     android:padding="4dp"
-                    android:visibility="gone" />
+                    android:enabled="false"/>
             </LinearLayout>
 
             <LinearLayout
@@ -107,17 +107,10 @@
                     android:id="@+id/tvGender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nam"
+                    android:text="Giới tính"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
                     android:visibility="visible" />
-
-                <Spinner
-                    android:id="@+id/spinnerGender"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/spinner_background"
-                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -127,6 +120,7 @@
                 android:layout_marginBottom="8dp">
 
                 <TextView
+                    android:id="@+id/tvWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cân nặng (kg): "
@@ -134,25 +128,24 @@
                     android:textSize="16sp"
                     android:layout_marginEnd="8dp" />
 
-                <TextView
-                    android:id="@+id/tvWeight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="70"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp"
-                    android:visibility="visible" />
+<!--                <TextView-->
+<!--                    android:id="@+id/tvWeight"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="..."-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:visibility="visible" />-->
 
                 <EditText
                     android:id="@+id/etWeight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp"
                     android:inputType="numberDecimal"
-                    android:background="@drawable/edit_text_background"
+                    android:background="@drawable/edit_background_user"
                     android:padding="4dp"
-                    android:visibility="gone" />
+                    android:enabled="false"/>
             </LinearLayout>
 
             <LinearLayout
@@ -162,6 +155,7 @@
                 android:layout_marginBottom="8dp">
 
                 <TextView
+                    android:id="@+id/tvHeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Chiều cao (cm): "
@@ -169,25 +163,24 @@
                     android:textSize="16sp"
                     android:layout_marginEnd="8dp" />
 
-                <TextView
-                    android:id="@+id/tvHeight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="175"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp"
-                    android:visibility="visible" />
+<!--                <TextView-->
+<!--                    android:id="@+id/tvHeight"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="175"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:visibility="visible" />-->
 
                 <EditText
                     android:id="@+id/etHeight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp"
                     android:inputType="numberDecimal"
-                    android:background="@drawable/edit_text_background"
+                    android:background="@drawable/edit_background_user"
                     android:padding="4dp"
-                    android:visibility="gone" />
+                    android:enabled="false" />
             </LinearLayout>
 
             <LinearLayout
@@ -197,6 +190,7 @@
                 android:layout_marginBottom="16dp">
 
                 <TextView
+                    android:id="@+id/tvActivityLevel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mức độ hoạt động: "
@@ -204,13 +198,24 @@
                     android:textSize="16sp"
                     android:layout_marginEnd="8dp" />
 
-                <TextView
-                    android:id="@+id/tvActivityLevel"
+<!--                <TextView-->
+<!--                    android:id="@+id/tvActivityLevel"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Trung bình"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:visibility="visible" />-->
+
+                <EditText
+                    android:id="@+id/etActivityLevel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Trung bình"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
+                    android:inputType="text"
+                    android:background="@drawable/edit_background_user"
+                    android:padding="4dp"
+                    android:enabled="false"/>
             </LinearLayout>
 
             <LinearLayout
@@ -226,7 +231,8 @@
                     android:text="Sửa"
                     android:textColor="#FFFFFF"
                     android:backgroundTint="#4CAF50"
-                    android:layout_marginEnd="16dp" />
+                    android:layout_marginEnd="16dp"
+                    android:visibility="visible" />
 
                 <Button
                     android:id="@+id/btnSave"
