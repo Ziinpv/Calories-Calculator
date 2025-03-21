@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.calories_caculator.fragment.UserInfoDialogFragment;
+import com.example.calories_caculator.fragment.UserPopupDialog;
 import com.example.calories_caculator.model.Food;
 import com.example.calories_caculator.adapter.FoodAdapter;
 import com.example.calories_caculator.model.Meal;
@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
         imgUserProfile = findViewById(R.id.imgUserAvatar);
 
+        firestoreHelper = new FirestoreHelper();
+
         // Initialize meals list and adapter
         meals = new ArrayList<>();
         mealAdapter = new MealAdapter(meals);
@@ -98,33 +100,29 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, WorkoutActivity.class);
             startActivity(intent);
         });
-//        ImageView ivUserInfo = findViewById(R.id.imgUserAvatar);
-//        ivUserInfo.setOnClickListener(v -> {
-//            UserInfoDialogFragment dialog = new UserInfoDialogFragment();
-//            dialog.show(getSupportFragmentManager(), "UserInfoDialog");
-//        });
-//        //ref
         // Set up status button (Xem thống kê calo)
         statusButton.setOnClickListener(v -> {
             StatsBottomSheet statsBottomSheet = new StatsBottomSheet();
             statsBottomSheet.show(getSupportFragmentManager(), "StatsBottomSheet");
         });
-        firestoreHelper = new FirestoreHelper();
-//reshUserData();
-//        imgUserProfile.setOnClickListener(v -> {
-//            UserInfoDialogFragment bottomSheet = new UserInfoDialogFragment(userId);
-//            bottomSheet.show(getSupportFragmentManager(), "UserInfoBottomSheet");
+
+        //Nhấp vào imageView thì hiện ra thông tin người dùng
+        //ImageView imageView = findViewById(R.id.imgUserAvatar);
+
+//        imageView.setOnClickListener(v -> {
+//            // Giả sử userId của người dùng là "user123"
+//            UserInfoDialogFragment bottomSheet = UserInfoDialogFragment.newInstance("user1");
+//            bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
 //        });
         ImageView imageView = findViewById(R.id.imgUserAvatar);
-
         imageView.setOnClickListener(v -> {
-            // Giả sử userId của người dùng là "user123"
-            UserInfoDialogFragment bottomSheet = UserInfoDialogFragment.newInstance("user1");
-            bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
+            UserPopupDialog userPopupDialog = new UserPopupDialog(MainActivity.this, "user1");
+            userPopupDialog.show();
         });
 
 
     }
+
 
     private void showFoodSelectionDialog() {
         Dialog dialog = new Dialog(this);

@@ -1,6 +1,8 @@
 package com.example.calories_caculator.firebase;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.calories_caculator.model.Food;
 import com.example.calories_caculator.model.User;
@@ -46,65 +48,44 @@ public class FirestoreHelper {
         void onSuccess(List<Food> foodList);
         void onFailure(Exception e);
     }
-    // Lấy thông tin user từ Firestore
-//    public void getUserInfo(String userId, final OnUserDataReceivedListener listener) {
-//        db.collection("user").document(userId).get()
-//                .addOnSuccessListener(documentSnapshot -> {
-//                    if (documentSnapshot.exists()) {
-//                        User user = documentSnapshot.toObject(User.class);
-//                        listener.onUserDataReceived(user);
-//                    } else {
-//                        listener.onUserDataReceived(null);
-//                    }
-//                })
-//                .addOnFailureListener(e -> listener.onUserDataReceived(null));
-//    }
-    public void getUserInfo(String userId, final OnUserDataReceivedListener listener) {
+    public void loadUserInfo(String userId, UserCallback callback) {
         db.collection("user").document(userId).get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        String name = documentSnapshot.getString("name");
-                        String gender = documentSnapshot.getString("gender");
-                        String activityLevel = documentSnapshot.getString("acivity_level"); // Lưu ý lỗi chính tả
-                        Long ageLong = documentSnapshot.getLong("age");
-                        Long heightLong = documentSnapshot.getLong("height");
-                        Long weightLong = documentSnapshot.getLong("wieght"); // Lưu ý lỗi chính tả
+                .addOnSuccessListener(document -> {
+                    if (document.exists()) {
+                        String name = document.getString("name");
+                        String gender = document.getString("gender");
+                        Long age = document.getLong("age");
+                        Long weight = document.getLong("weight");
+                        Long height = document.getLong("height");
+                        String activityLevel = document.getString("activityLevel");
 
-                        int age = (ageLong != null) ? ageLong.intValue() : 0;
-                        int height = (heightLong != null) ? heightLong.intValue() : 0;
-                        int weight = (weightLong != null) ? weightLong.intValue() : 0;
-
-                        User user = new User(name, age, gender, height, weight, activityLevel);
-                        listener.onUserDataReceived(user);
-                    } else {
-                        listener.onUserDataReceived(null);
+                        callback.onUserLoaded(name, gender, age, weight, height, activityLevel);
                     }
                 })
-                .addOnFailureListener(e -> listener.onUserDataReceived(null));
+                .addOnFailureListener(e -> callback.onError("Lỗi tải dữ liệu!"));
     }
-
-
-
-    // Cập nhật thông tin user lên Firestore
-    public void updateUserInfo(String userId, int age, float weight, float height, String activityLevel, final OnDataUpdateListener listener) {
+    public void saveUserInfo(Context context, String userId, int age, int weight, int height, String activityLevel, SaveCallback callback) {
         Map<String, Object> updatedData = new HashMap<>();
         updatedData.put("age", age);
-        updatedData.put("wieght", weight);
+        updatedData.put("weight", weight);
         updatedData.put("height", height);
-        updatedData.put("activity_level", activityLevel);
+        updatedData.put("activityLevel", activityLevel);
 
         db.collection("user").document(userId).update(updatedData)
-                .addOnSuccessListener(aVoid -> listener.onDataUpdate(true))
-                .addOnFailureListener(e -> listener.onDataUpdate(false));
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(context, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
+                    callback.onSuccess();
+                })
+                .addOnFailureListener(e -> callback.onError("Lỗi cập nhật!"));
+    }
+    public interface UserCallback {
+        void onUserLoaded(String name, String gender, Long age, Long weight, Long height, String activityLevel);
+        void onError(String errorMessage);
     }
 
-    // Interface callback khi lấy dữ liệu
-    public interface OnUserDataReceivedListener {
-        void onUserDataReceived(User user);
+    public interface SaveCallback {
+        void onSuccess();
+        void onError(String errorMessage);
     }
 
-    // Interface callback khi cập nhật dữ liệu
-    public interface OnDataUpdateListener {
-        void onDataUpdate(boolean success);
-    }
 }
