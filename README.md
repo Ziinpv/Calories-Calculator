@@ -82,6 +82,17 @@ git pull origin main
 ```
 
 ---
+# Phân Công Công Việc 
+
+### Thành viên nhóm:
+
+| Mã số sinh viên | Email                           | Tên                          | Phân công công việc                               |
+|-----------------|---------------------------------|------------------------------|--------------------------------------------------|
+| 2212451         | 2212451@dlu.edu.vn              | Nguyễn Hoàng Sang            | Sử lý sự kiện, DB                               |
+| 2212407         | 2212407@dlu.edu.vn              | Hoàng Long                   | Sử lý sự kiện, DB, API                         |
+| 2213795         | 2213795@dlu.edu.vn              | Nguyễn Thị Hoàng Phúc        | FontEnd                                          |
+
+---
 
 ✨ **Chúc bạn thành công với GitHub trong Android Studio!** 🚀
 
