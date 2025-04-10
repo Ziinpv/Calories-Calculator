@@ -10,11 +10,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.calories_caculator.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etUsername, etPassword;
-    private Button btnLogin;
+    private Button btnLogin, btnRegister;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +27,15 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        btnRegister= findViewById(R.id.btnRegister);
+        mAuth = FirebaseAuth.getInstance();
+
+//        btnLogin.setEnabled(false);
+
 
         // Đổi màu nút Đăng nhập thành RGB(255, 193, 180)
-        btnLogin.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(255, 193, 180)));
-
+        //btnLogin.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(255, 193, 180)));
+//
         // Xử lý sự kiện đăng nhập
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,26 +46,31 @@ public class LoginActivity extends AppCompatActivity {
                 if (username.isEmpty() || password.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
                 } else {
-                    boolean isLoginSuccess = checkLogin(username, password);
-
-                    if (isLoginSuccess) {
-                        Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                        // Chuyển sang màn hình chính
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish(); // Đóng LoginActivity để không quay lại sau khi đăng nhập
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Sai tên đăng nhập hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
-                    }
+                    mAuth.signInWithEmailAndPassword(username, password)
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                                    // Chuyển sang MainActivity
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    finish();
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Đăng nhập thất bại: " +
+                                            task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            });
                 }
             }
         });
+        btnRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        });
     }
 
-    // Hàm kiểm tra đăng nhập (giả lập)
-    private boolean checkLogin(String username, String password) {
-        String validUsername = "user123";
-        String validPassword = "pass123";
-        return username.equals(validUsername) && password.equals(validPassword);
-    }
+//    // Hàm kiểm tra đăng nhập (giả lập)
+//    private boolean checkLogin(String username, String password) {
+//        String validUsername = "user123";
+//        String validPassword = "pass123";
+//        return username.equals(validUsername) && password.equals(validPassword);
+//    }
 }

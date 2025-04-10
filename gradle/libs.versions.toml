@@ -13,6 +13,7 @@ picasso = "2.8"
 retrofit = "2.9.0"
 retrofitGson = "2.9.0"
 youtubePlayer = "12.1.0"
+firebase-auth = "22.3.1"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -27,6 +28,7 @@ picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit_gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofitGson" }
 androidyoutubeplayer = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "core", version.ref = "youtubePlayer" }
+firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebase-auth" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
