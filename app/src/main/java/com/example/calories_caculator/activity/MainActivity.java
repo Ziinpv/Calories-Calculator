@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private MealAdapter mealAdapter;
     private static final int MAX_CALORIES = 3000;
     private static final int WARNING_CALORIES = 1750;
+    private FloatingActionButton chatBotButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         bmiResult = findViewById(R.id.bmiResult);
         addFoodButton = findViewById(R.id.addFoodButton);
         workoutButton = findViewById(R.id.workoutButton);
-
+        chatBotButton = findViewById(R.id.openChatButton);
 
         statusButton = findViewById(R.id.statusBotton);
 
@@ -104,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
         statusButton.setOnClickListener(v -> {
             StatsBottomSheet statsBottomSheet = new StatsBottomSheet();
             statsBottomSheet.show(getSupportFragmentManager(), "StatsBottomSheet");
+        });
+        chatBotButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+            startActivity(intent);
         });
 
         //Nhấp vào imageView thì hiện ra thông tin người dùng
