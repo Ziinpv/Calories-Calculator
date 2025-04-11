@@ -7,6 +7,13 @@
         <item>Tháng này</item>
         <item>Chọn ngày</item>
     </string-array>
+    <string-array name="activity_levels">
+        <item>Ít vận động</item>
+        <item>Vận động nhẹ</item>
+        <item>Vận động trung bình</item>
+        <item>Vận động nhiều</item>
+        <item>Vận động rất nhiều</item>
+    </string-array>
 
 </resources>
 

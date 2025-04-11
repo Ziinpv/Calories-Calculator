@@ -27,6 +27,13 @@
 
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.WorkoutActivity" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".activity.UserInfoActivity"
+            android:exported="true" />
 
     </application>
 

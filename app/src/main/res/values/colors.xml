@@ -6,4 +6,7 @@
     <color name="green">#FF0000</color>
     <color name="red">#F44336</color>
     <color name="light_gray">#F5F5F5</color>
+    <color name="Primary">#7A4efa</color>
+    <color name="PrimaryDark">#4a26b2</color>
+    <color name="Accent">#FFFFFFFF</color>
 </resources>
