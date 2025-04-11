@@ -15,6 +15,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true // Thêm dòng này để hỗ trợ vector
     }
 
     buildTypes {
@@ -30,7 +31,14 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    // Thêm block này để tối ưu hiệu suất
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
 }
+
 dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
@@ -38,14 +46,19 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.firebase.firestore)
     implementation(libs.picasso)
-
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
-
     implementation(libs.androidyoutubeplayer)
-    implementation(libs.material)
+
+    // Thêm thư viện GIF
+    implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
+
+    // Giảm kích thước APK
+    implementation("androidx.multidex:multidex:2.0.1")
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
 }

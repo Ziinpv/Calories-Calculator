@@ -11,13 +11,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.calories_caculator.R;
 
-public class LoginActivity extends AppCompatActivity {
-
+public class LoginActivity extends AppCompatActivity
+{
     private EditText etUsername, etPassword;
-    private Button btnLogin;
+    private Button btnLogin, btnRegister;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -25,32 +26,54 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
 
-        // Đổi màu nút Đăng nhập thành RGB(255, 193, 180)
-        btnLogin.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(255, 193, 180)));
+        // Đổi màu nút Đăng nhập thành RGB(247, 207, 216)
+        btnLogin.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(247, 207, 216)));
+        // Đổi màu nút Đăng ký thành một màu khác (ví dụ: màu xanh nhạt)
+        btnRegister.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(247, 207, 216)));
 
         // Xử lý sự kiện đăng nhập
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
                 String username = etUsername.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
 
-                if (username.isEmpty() || password.isEmpty()) {
+                if (username.isEmpty() || password.isEmpty())
+                {   //Kiểm tra nếu người dùng bỏ trống ô nào thì hiển thị cảnh báo.
                     Toast.makeText(LoginActivity.this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
-                } else {
+                }
+                else
+                {   //Nếu có nhập đủ, gọi hàm checkLogin() để kiểm tra thông tin
                     boolean isLoginSuccess = checkLogin(username, password);
-
-                    if (isLoginSuccess) {
+                    //Nếu đúng tài khoản, hiển thị thông báo thành công, chuyển sang MainActivity và đóng màn hình đăng nhập.
+                    if (isLoginSuccess)
+                    {
                         Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+
                         // Chuyển sang màn hình chính
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish(); // Đóng LoginActivity để không quay lại sau khi đăng nhập
-                    } else {
+                    }
+                    else
+                    {
                         Toast.makeText(LoginActivity.this, "Sai tên đăng nhập hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
                     }
                 }
+            }
+        });
+
+        // Xử lý sự kiện đăng ký
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                // Chuyển sang màn hình đăng ký
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
             }
         });
     }
