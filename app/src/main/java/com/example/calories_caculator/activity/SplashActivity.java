@@ -33,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
         webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null);
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             finish();
         }, 2500);
     }

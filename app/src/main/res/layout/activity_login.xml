@@ -88,9 +88,9 @@
                     android:layout_height="56dp"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/green_button_background"
+                    android:background="@drawable/custom_btn"
                     android:text="Đăng nhập"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/Accent" />
 
                 <Button
                     android:id="@+id/btnRegister"
@@ -98,7 +98,7 @@
                     android:layout_height="56dp"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/red_button_background"
+                    android:background="@drawable/custom_btn"
                     android:text="Đăng ký"
                     android:textColor="@color/white" />
             </LinearLayout>

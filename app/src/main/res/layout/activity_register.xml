@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_blue"
-    tools:context=".activity.RegisterActivity">
+    android:background="@color/dark_blue">
+<!--    tools:context=".activity.RegisterActivity">-->
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -52,19 +52,21 @@
                 android:layout_marginBottom="16dp"
                 android:src="@drawable/ic_login" />
 
+
+
             <EditText
-                android:id="@+id/etNewUsername"
+                android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/edit_text_background"
-                android:hint="Tên đăng nhập"
-                android:inputType="text"
+                android:hint="Email hoặc tên đăng nhập"
+                android:inputType="textEmailAddress"
                 android:padding="16dp"
                 android:textColorHint="#78909C" />
 
             <EditText
-                android:id="@+id/etNewPassword"
+                android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -85,22 +87,31 @@
                 android:padding="16dp"
                 android:textColorHint="#78909C" />
 
-            <Button
-                android:id="@+id/btnCompleteRegister"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginBottom="24dp"
-                android:background="@drawable/green_button_background"
-                android:text="Hoàn thành đăng ký"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/tvLoginInstead"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Đã có tài khoản? Đăng nhập"
-                android:textColor="@color/dark_blue" />
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnRegister"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_button_background"
+                    android:text="Đăng ký"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/btnBack"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/red_button_background"
+                    android:text="Quay lại"
+                    android:textColor="@color/white" />
+            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

@@ -15,21 +15,25 @@
         android:theme="@style/Theme.CaloriesCaculator"
         tools:targetApi="31">
 
-
-        <!-- Đặt SplashActivity làm màn hình khởi động -->
+        <!-- Đặt LoginActivity làm màn hình khởi động -->
         <activity
-            android:name=".activity.SplashActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:name=".activity.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.WorkoutActivity" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".activity.UserInfoActivity"
+            android:exported="true" />
 
     </application>
 
