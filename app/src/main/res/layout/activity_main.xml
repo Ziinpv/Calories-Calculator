@@ -179,6 +179,15 @@
                     android:layout_marginTop="16dp"
                     android:gravity="end">
 
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/openChatButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:src="@android:drawable/ic_menu_help"
+                        app:backgroundTint="#4CAF50"
+                        app:fabSize="mini"
+                        app:tint="#FFFFFF" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/workoutButton"
