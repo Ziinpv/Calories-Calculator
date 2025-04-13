@@ -25,6 +25,7 @@ import com.example.calories_caculator.fragment.StatsBottomSheet;
 import com.example.calories_caculator.firebase.FirestoreHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 import java.util.ArrayList;
@@ -115,8 +116,9 @@ public class MainActivity extends AppCompatActivity {
 //            bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
 //        });
         ImageView imageView = findViewById(R.id.imgUserAvatar);
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         imageView.setOnClickListener(v -> {
-            UserPopupDialog userPopupDialog = new UserPopupDialog(MainActivity.this, "user1");
+            UserPopupDialog userPopupDialog = new UserPopupDialog(MainActivity.this,"user1");
             userPopupDialog.show();
         });
 

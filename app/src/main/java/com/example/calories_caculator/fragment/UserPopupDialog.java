@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.example.calories_caculator.R;
 import com.example.calories_caculator.firebase.FirestoreHelper;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class UserPopupDialog {
     private Dialog dialog;

@@ -60,10 +60,17 @@ public class FirestoreHelper {
                         String activityLevel = document.getString("activityLevel");
 
                         callback.onUserLoaded(name, gender, age, weight, height, activityLevel);
+                    } else {
+                        // Bổ sung dòng này
+                        callback.onError("Không tìm thấy dữ liệu người dùng với ID: " + userId);
                     }
                 })
-                .addOnFailureListener(e -> callback.onError("Lỗi tải dữ liệu!"));
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Lỗi Firestore: ", e);
+                    callback.onError("Lỗi tải dữ liệu Firestore!");
+                });
     }
+
     public void saveUserInfo(Context context, String userId, int age, int weight, int height, String activityLevel, SaveCallback callback) {
         Map<String, Object> updatedData = new HashMap<>();
         updatedData.put("age", age);
