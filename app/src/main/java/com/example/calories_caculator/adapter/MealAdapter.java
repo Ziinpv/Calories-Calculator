@@ -4,12 +4,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.calories_caculator.model.Meal;
 import com.example.calories_caculator.R;
 import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class MealAdapter extends BaseAdapter {
@@ -47,17 +49,21 @@ public class MealAdapter extends BaseAdapter {
         TextView mealName = convertView.findViewById(R.id.mealName);
         TextView mealQuantity = convertView.findViewById(R.id.mealQuantity);
         TextView mealCalories = convertView.findViewById(R.id.mealCalories);
+        ImageButton deleteButton = convertView.findViewById(R.id.deleteButton); // Thêm dòng này
 
+        // Load ảnh và set dữ liệu
         Picasso.get().load(meal.getImageUrl()).into(mealImage);
         mealName.setText(meal.getName());
         mealQuantity.setText("Số lượng: " + meal.getQuantity());
         mealCalories.setText(meal.getTotalCalories() + " kcal");
 
-        return convertView;
-    }
+        // Xử lý nút xoá
+        deleteButton.setOnClickListener(v -> {
+            mealList.remove(position);
+            notifyDataSetChanged();
+        });
 
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
+        return convertView;
     }
 
     public int getTotalCalories() {

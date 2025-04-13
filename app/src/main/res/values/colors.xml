@@ -9,4 +9,6 @@
     <color name="Primary">#7A4efa</color>
     <color name="PrimaryDark">#4a26b2</color>
     <color name="Accent">#FFFFFFFF</color>
+    <color name="Pink">#F7CFD8</color>
+    <color name="PinkLight">#FFEDFA</color>
 </resources>

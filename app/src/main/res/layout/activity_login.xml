@@ -82,7 +82,7 @@
                 android:layout_marginBottom="24dp"
                 android:orientation="horizontal">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnLogin"
                     android:layout_width="0dp"
                     android:layout_height="56dp"
@@ -92,7 +92,7 @@
                     android:text="Đăng nhập"
                     android:textColor="@color/Accent" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnRegister"
                     android:layout_width="0dp"
                     android:layout_height="56dp"

@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.CaloriesCaculator" parent="Base.Theme.CaloriesCaculator" />
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_anim</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
 </resources>

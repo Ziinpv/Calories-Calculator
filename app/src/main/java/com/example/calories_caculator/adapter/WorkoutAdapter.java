@@ -1,22 +1,24 @@
 package com.example.calories_caculator.adapter;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calories_caculator.R;
 import com.example.calories_caculator.model.WorkoutVideo;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder> {
+
     private List<WorkoutVideo> workoutVideos;
 
     public WorkoutAdapter(List<WorkoutVideo> workoutVideos) {
@@ -33,8 +35,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
 
     @Override
     public void onBindViewHolder(@NonNull WorkoutViewHolder holder, int position) {
-        WorkoutVideo video = workoutVideos.get(position);
-        holder.bind(video);
+        holder.bind(workoutVideos.get(position));
     }
 
     @Override
@@ -43,35 +44,29 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
     }
 
     static class WorkoutViewHolder extends RecyclerView.ViewHolder {
-        private YouTubePlayerView youTubePlayerView;
-        private TextView titleTextView;
-        private TextView descriptionTextView;
         private ImageView thumbnailImageView;
+        private TextView titleTextView, descriptionTextView;
 
         public WorkoutViewHolder(@NonNull View itemView) {
             super(itemView);
-            youTubePlayerView = itemView.findViewById(R.id.youtubePlayerView);
+            thumbnailImageView = itemView.findViewById(R.id.thumbnailImageView);
             titleTextView = itemView.findViewById(R.id.videoTitle);
             descriptionTextView = itemView.findViewById(R.id.videoDescription);
-            thumbnailImageView = itemView.findViewById(R.id.thumbnailImageView);
         }
 
         public void bind(WorkoutVideo video) {
             titleTextView.setText(video.getTitle());
             descriptionTextView.setText(video.getDescription());
-
-            // Load thumbnail image using Picasso
             Picasso.get().load(video.getThumbnailUrl()).into(thumbnailImageView);
 
-            // Set click listener on title to play video
-            titleTextView.setOnClickListener(v -> {
-                youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-                    @Override
-                    public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                        youTubePlayer.cueVideo(video.getVideoId(), 0);
-                    }
-                });
-            });
+            View.OnClickListener openYouTube = v -> {
+                String url = "https://www.youtube.com/watch?v=" + video.getVideoId();
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                v.getContext().startActivity(intent);
+            };
+
+            thumbnailImageView.setOnClickListener(openYouTube);
+            titleTextView.setOnClickListener(openYouTube);
         }
     }
 }
