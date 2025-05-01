@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:title="Home"
+        android:icon="@drawable/ic_home"
+        />
+    <item
+        android:id="@+id/workout"
+        android:title="Workout"
+        android:icon="@drawable/ic_workout"
+        />
+    <item
+        android:id="@+id/chatBot"
+        android:title="ChatBot"
+        android:icon="@drawable/ic_chatbot"
+        />
+    <item
+        android:id="@+id/profile"
+        android:title="Profile"
+        android:icon="@drawable/ic_profile"
+        />
+</menu>
