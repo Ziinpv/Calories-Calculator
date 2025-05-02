@@ -9,52 +9,41 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.calories_caculator.R;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ProfileFragment extends Fragment {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.example.calories_caculator.model.User;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class ProfileFragment extends Fragment implements EditProfileBottomSheet.ProfileUpdateListener {
+
+    private CardView cardHeader;
+    private ImageView ivProfileImage;
+    private TextView tvName, tvEmail;
+    private TextView tvGender, tvWeight, tvHeight, tvAge, tvActivityLevel;
+
+    private FirebaseFirestore db;
+    private FirebaseUser currentUser;
+    private User user;
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        db = FirebaseFirestore.getInstance();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     @Override
@@ -62,5 +51,165 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Initialize views
+        cardHeader = view.findViewById(R.id.cardHeader);
+        ivProfileImage = view.findViewById(R.id.ivProfileImage);
+        tvName = view.findViewById(R.id.tvName);
+        tvEmail = view.findViewById(R.id.tvEmail);
+        tvGender = view.findViewById(R.id.tvGender);
+        tvWeight = view.findViewById(R.id.tvWeight);
+        tvHeight = view.findViewById(R.id.tvHeight);
+        tvAge = view.findViewById(R.id.tvAge);
+        tvActivityLevel = view.findViewById(R.id.tvActivityLevel);
+
+        // Set click listener for header to open edit bottom sheet
+        cardHeader.setOnClickListener(v -> showEditProfileBottomSheet());
+
+        // Display authenticated user info
+        displayAuthUserInfo();
+
+        // Load additional user profile data from Firestore
+        loadUserProfile();
+    }
+
+    private void displayAuthUserInfo() {
+        if (currentUser != null) {
+            // Display user name
+            if (currentUser.getDisplayName() != null && !currentUser.getDisplayName().isEmpty()) {
+                tvName.setText(currentUser.getDisplayName());
+            } else {
+                tvName.setText("Người dùng");
+            }
+
+            // Display user email
+            tvEmail.setText(currentUser.getEmail());
+
+            // Display user profile image if available
+            if (currentUser.getPhotoUrl() != null) {
+                Glide.with(this)
+                        .load(currentUser.getPhotoUrl())
+                        .placeholder(R.drawable.ic_profile)
+                        .error(R.drawable.ic_profile)
+                        .circleCrop()
+                        .into(ivProfileImage);
+            }
+        }
+    }
+
+    private void loadUserProfile() {
+        if (currentUser == null) return;
+
+        db.collection("users")
+                .document(currentUser.getUid())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            user = document.toObject(User.class);
+                            updateProfileUI(user);
+                        } else {
+                            // No profile exists yet - show empty/default values
+                            setEmptyProfileValues();
+                        }
+                    } else {
+                        Toast.makeText(requireContext(), "Lỗi khi tải thông tin: " + task.getException(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void setEmptyProfileValues() {
+        tvGender.setText("Chưa cập nhật");
+        tvWeight.setText("Chưa cập nhật");
+        tvHeight.setText("Chưa cập nhật");
+        tvAge.setText("Chưa cập nhật");
+        tvActivityLevel.setText("Chưa cập nhật");
+
+        // If you have a BMI status TextView
+        if (getView() != null && getView().findViewById(R.id.tvBmiStatus) != null) {
+            TextView tvBmiStatus = getView().findViewById(R.id.tvBmiStatus);
+            tvBmiStatus.setText("Tình trạng cân nặng: Chưa có dữ liệu");
+        }
+    }
+
+    private void updateProfileUI(User user) {
+        if (user == null) return;
+
+        // Update profile fields if they exist
+        if (user.getGender() != null && !user.getGender().isEmpty()) {
+            tvGender.setText(user.getGender());
+        } else {
+            tvGender.setText("Chưa cập nhật");
+        }
+
+        if (user.getWeight() > 0) {
+            tvWeight.setText((int)user.getWeight() + " kg");
+        } else {
+            tvWeight.setText("Chưa cập nhật");
+        }
+
+        if (user.getHeight() > 0) {
+            tvHeight.setText((int)user.getHeight() + " cm");
+        } else {
+            tvHeight.setText("Chưa cập nhật");
+        }
+
+        if (user.getAge() > 0) {
+            tvAge.setText(user.getAge() + " tuổi");
+        } else {
+            tvAge.setText("Chưa cập nhật");
+        }
+
+        if (user.getActivityLevel() != null && !user.getActivityLevel().isEmpty()) {
+            tvActivityLevel.setText(user.getActivityLevel());
+        } else {
+            tvActivityLevel.setText("Chưa cập nhật");
+        }
+
+        // Calculate and display BMI if height and weight are available
+        if (user.getHeight() > 0 && user.getWeight() > 0) {
+            double heightInMeters = user.getHeight() / 100.0;
+            double bmi = user.getWeight() / (heightInMeters * heightInMeters);
+            String bmiStatus = getBmiStatus(bmi);
+
+            // If you have a BMI status TextView
+            if (getView() != null && getView().findViewById(R.id.tvBmiStatus) != null) {
+                TextView tvBmiStatus = getView().findViewById(R.id.tvBmiStatus);
+                tvBmiStatus.setText("Tình trạng cân nặng: " + bmiStatus + " (" + String.format("%.1f", bmi) + ")");
+            }
+        } else if (getView() != null && getView().findViewById(R.id.tvBmiStatus) != null) {
+            TextView tvBmiStatus = getView().findViewById(R.id.tvBmiStatus);
+            tvBmiStatus.setText("Tình trạng cân nặng: Chưa có dữ liệu");
+        }
+    }
+
+    private String getBmiStatus(double bmi) {
+        if (bmi < 18.5) {
+            return "Thiếu cân";
+        } else if (bmi < 25) {
+            return "Bình thường";
+        } else if (bmi < 30) {
+            return "Thừa cân";
+        } else {
+            return "Béo phì";
+        }
+    }
+
+    private void showEditProfileBottomSheet() {
+        EditProfileBottomSheet bottomSheet = EditProfileBottomSheet.newInstance(user);
+        bottomSheet.setProfileUpdateListener(this);
+        bottomSheet.show(getChildFragmentManager(), "EditProfileBottomSheet");
+    }
+
+    @Override
+    public void onProfileUpdated(User updatedUser) {
+        this.user = updatedUser;
+        updateProfileUI(updatedUser);
     }
 }

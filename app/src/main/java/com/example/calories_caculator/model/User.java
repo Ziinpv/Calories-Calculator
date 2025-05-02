@@ -7,36 +7,81 @@ public class User {
     private int height;
     private int weight;
     private String activity_level;
+    private double activity_factor; // Added field for activity factor
 
     // Constructor rỗng cần thiết cho Firestore
-    public User() {}
+    public User() {
+    }
 
-    public User(String name, int age, String gender, int weight, int height, String activity_level) {
+    public User(String name, int age, String gender, int weight, int height, String activity_level, double activity_factor) {
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.weight = weight;
         this.height = height;
         this.activity_level = activity_level;
+        this.activity_factor = activity_factor;
+    }
+
+    // Overloaded constructor for backward compatibility
+    public User(String name, int age, String gender, int weight, int height, String activity_level) {
+        this(name, age, gender, weight, height, activity_level, 1.2); // Default to sedentary
     }
 
     // Getters và Setters
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getName() {
+        return name;
+    }
 
-    public int getAge() { return age; }
-    public void setAge(int age) { this.age = age; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getGender() { return gender; }
-    public void setGender(String gender) { this.gender = gender; }
+    public int getAge() {
+        return age;
+    }
 
-    public double getWeight() { return weight; }
-    public void setWeight(int weight) { this.weight = weight; }
+    public void setAge(int age) {
+        this.age = age;
+    }
 
-    public double getHeight() { return height; }
-    public void setHeight(int height) { this.height = height; }
+    public String getGender() {
+        return gender;
+    }
 
-    public String getActivityLevel() { return activity_level; }
-    public void setActivityLevel(String activity_level) { this.activity_level = activity_level; }
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public String getActivityLevel() {
+        return activity_level;
+    }
+
+    public void setActivityLevel(String activity_level) {
+        this.activity_level = activity_level;
+    }
+
+    public double getActivityFactor() {
+        return activity_factor;
+    }
+
+    public void setActivityFactor(double activity_factor) {
+        this.activity_factor = activity_factor;
+    }
 }
-
