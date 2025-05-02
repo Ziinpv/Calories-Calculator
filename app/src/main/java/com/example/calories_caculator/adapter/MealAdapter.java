@@ -3,10 +3,12 @@ package com.example.calories_caculator.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calories_caculator.model.Meal;
 import com.example.calories_caculator.R;
@@ -14,56 +16,36 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class MealAdapter extends BaseAdapter {
+public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder> {
     private List<Meal> mealList;
+    private OnMealDeleteListener deleteListener;
 
-    public MealAdapter(List<Meal> mealList) {
+    public interface OnMealDeleteListener {
+        void onMealDeleted(int position);
+    }
+
+    public MealAdapter(List<Meal> mealList, OnMealDeleteListener listener) {
         this.mealList = mealList;
+        this.deleteListener = listener;
+    }
+
+    @NonNull
+    @Override
+    public MealViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.meal_item, parent, false);
+        return new MealViewHolder(view);
     }
 
     @Override
-    public int getCount() {
-        return mealList.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return mealList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.meal_item, parent, false);
-        }
-
+    public void onBindViewHolder(@NonNull MealViewHolder holder, int position) {
         Meal meal = mealList.get(position);
+        holder.bind(meal, position);
+    }
 
-        ImageView mealImage = convertView.findViewById(R.id.mealImage);
-        TextView mealName = convertView.findViewById(R.id.mealName);
-        TextView mealQuantity = convertView.findViewById(R.id.mealQuantity);
-        TextView mealCalories = convertView.findViewById(R.id.mealCalories);
-        ImageButton deleteButton = convertView.findViewById(R.id.deleteButton); // Thêm dòng này
-
-        // Load ảnh và set dữ liệu
-        Picasso.get().load(meal.getImageUrl()).into(mealImage);
-        mealName.setText(meal.getName());
-        mealQuantity.setText("Số lượng: " + meal.getQuantity());
-        mealCalories.setText(meal.getTotalCalories() + " kcal");
-
-        // Xử lý nút xoá
-        deleteButton.setOnClickListener(v -> {
-            mealList.remove(position);
-            notifyDataSetChanged();
-        });
-
-        return convertView;
+    @Override
+    public int getItemCount() {
+        return mealList.size();
     }
 
     public int getTotalCalories() {
@@ -72,5 +54,31 @@ public class MealAdapter extends BaseAdapter {
             total += meal.getTotalCalories();
         }
         return total;
+    }
+
+    public class MealViewHolder extends RecyclerView.ViewHolder {
+        ImageView mealImage;
+        TextView mealName;
+        TextView mealQuantity;
+        TextView mealCalories;
+
+
+        public MealViewHolder(@NonNull View itemView) {
+            super(itemView);
+            mealImage = itemView.findViewById(R.id.mealImage);
+            mealName = itemView.findViewById(R.id.mealName);
+            mealQuantity = itemView.findViewById(R.id.mealQuantity);
+            mealCalories = itemView.findViewById(R.id.mealCalories);
+
+        }
+
+        public void bind(Meal meal, int position) {
+            Picasso.get().load(meal.getImageUrl()).into(mealImage);
+            mealName.setText(meal.getName());
+            mealQuantity.setText("Số lượng: " + meal.getQuantity());
+            mealCalories.setText(meal.getTotalCalories() + " kcal");
+
+
+        }
     }
 }
