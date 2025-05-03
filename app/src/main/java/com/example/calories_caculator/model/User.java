@@ -7,13 +7,15 @@ public class User {
     private int height;
     private int weight;
     private String activity_level;
-    private double activity_factor; // Added field for activity factor
+    private double activity_factor;
+    private String imageUrl; // Thêm trường cho URL ảnh đại diện
 
     // Constructor rỗng cần thiết cho Firestore
     public User() {
     }
 
-    public User(String name, int age, String gender, int weight, int height, String activity_level, double activity_factor) {
+    public User(String name, int age, String gender, int weight, int height,
+                String activity_level, double activity_factor, String imageUrl) {
         this.name = name;
         this.age = age;
         this.gender = gender;
@@ -21,11 +23,19 @@ public class User {
         this.height = height;
         this.activity_level = activity_level;
         this.activity_factor = activity_factor;
+        this.imageUrl = imageUrl;
     }
 
     // Overloaded constructor for backward compatibility
-    public User(String name, int age, String gender, int weight, int height, String activity_level) {
-        this(name, age, gender, weight, height, activity_level, 1.2); // Default to sedentary
+    public User(String name, int age, String gender, int weight, int height,
+                String activity_level, double activity_factor) {
+        this(name, age, gender, weight, height, activity_level, activity_factor, null);
+    }
+
+    // Overloaded constructor for backward compatibility
+    public User(String name, int age, String gender, int weight, int height,
+                String activity_level) {
+        this(name, age, gender, weight, height, activity_level, 1.2, null); // Default to sedentary
     }
 
     // Getters và Setters
@@ -83,5 +93,14 @@ public class User {
 
     public void setActivityFactor(double activity_factor) {
         this.activity_factor = activity_factor;
+    }
+
+    // Thêm getter và setter cho imageUrl
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

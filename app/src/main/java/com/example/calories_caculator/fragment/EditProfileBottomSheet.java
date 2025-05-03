@@ -1,6 +1,8 @@
 package com.example.calories_caculator.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.example.calories_caculator.R;
 import com.example.calories_caculator.model.User;
@@ -27,8 +30,8 @@ import java.util.Map;
 
 public class EditProfileBottomSheet extends BottomSheetDialogFragment {
 
-    private Spinner spinnerGender; // Thay thế EditText bằng Spinner
-    private EditText etWeight, etHeight, etAge;
+    private Spinner spinnerGender;
+    private EditText etName, etWeight, etHeight, etAge;
     private Spinner spinnerActivityLevel;
     private TextView tvActivityDescription;
     private Button btnSave, btnCancel;
@@ -73,7 +76,6 @@ public class EditProfileBottomSheet extends BottomSheetDialogFragment {
     }
 
     public EditProfileBottomSheet() {
-        // Required empty constructor
         // Initialize the activity factor map
         for (int i = 0; i < activityLevels.length; i++) {
             activityFactorMap.put(activityLevels[i], activityFactors[i]);
@@ -110,7 +112,8 @@ public class EditProfileBottomSheet extends BottomSheetDialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Initialize views
-        spinnerGender = view.findViewById(R.id.spinnerGender); // Khởi tạo Spinner giới tính
+        etName = view.findViewById(R.id.etName);
+        spinnerGender = view.findViewById(R.id.spinnerGender);
         etWeight = view.findViewById(R.id.etWeight);
         etHeight = view.findViewById(R.id.etHeight);
         etAge = view.findViewById(R.id.etAge);
@@ -120,7 +123,7 @@ public class EditProfileBottomSheet extends BottomSheetDialogFragment {
         btnCancel = view.findViewById(R.id.btnCancel);
 
         // Set up spinners
-        setupGenderSpinner(); // Thiết lập Spinner giới tính
+        setupGenderSpinner();
         setupActivityLevelSpinner();
 
         // Populate fields with existing data
@@ -139,7 +142,6 @@ public class EditProfileBottomSheet extends BottomSheetDialogFragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGender.setAdapter(adapter);
 
-        // Chọn giới tính hiện tại nếu có
         if (user != null && user.getGender() != null) {
             if ("Nam".equalsIgnoreCase(user.getGender())) {
                 spinnerGender.setSelection(0);
@@ -158,7 +160,6 @@ public class EditProfileBottomSheet extends BottomSheetDialogFragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerActivityLevel.setAdapter(adapter);
 
-        // Set listener to update description when selection changes
         spinnerActivityLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -175,7 +176,10 @@ public class EditProfileBottomSheet extends BottomSheetDialogFragment {
 
     private void populateFields() {
         if (user != null) {
-            // Giới tính đã được xử lý trong setupGenderSpinner()
+            // Populate name
+            if (user.getName() != null && !user.getName().isEmpty()) {
+                etName.setText(user.getName());
+            }
 
             if (user.getWeight() > 0) {
                 etWeight.setText(String.valueOf((int) user.getWeight()));
@@ -189,7 +193,6 @@ public class EditProfileBottomSheet extends BottomSheetDialogFragment {
                 etAge.setText(String.valueOf(user.getAge()));
             }
 
-            // Set activity level in spinner if it exists
             if (user.getActivityLevel() != null && !user.getActivityLevel().isEmpty()) {
                 for (int i = 0; i < activityLevels.length; i++) {
                     if (activityLevels[i].equals(user.getActivityLevel())) {
@@ -198,22 +201,37 @@ public class EditProfileBottomSheet extends BottomSheetDialogFragment {
                     }
                 }
             }
+        } else if (currentUser != null && currentUser.getDisplayName() != null) {
+            // For new users, pre-fill name from Auth
+            etName.setText(currentUser.getDisplayName());
         }
     }
 
     private void saveProfile() {
+        // Kiểm tra Fragment còn attached không ngay từ đầu
+        if (!isAdded() || getContext() == null) {
+            return;
+        }
+
         if (currentUser == null) {
             Toast.makeText(requireContext(), "Bạn cần đăng nhập để lưu thông tin", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Get values from inputs
-        String gender = spinnerGender.getSelectedItem().toString(); // Lấy giá trị từ Spinner
+        // Get and validate name
+        String name = etName.getText().toString().trim();
+        if (name.isEmpty()) {
+            Toast.makeText(requireContext(), "Vui lòng nhập tên hiển thị", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Get other values
+        String gender = spinnerGender.getSelectedItem().toString();
         int selectedPosition = spinnerActivityLevel.getSelectedItemPosition();
         String activityLevel = activityLevels[selectedPosition];
         double activityFactor = activityFactors[selectedPosition];
 
-        // Parse numeric values with validation
+        // Parse and validate numeric values
         int weight = 0;
         int height = 0;
         int age = 0;
@@ -250,10 +268,8 @@ public class EditProfileBottomSheet extends BottomSheetDialogFragment {
         // Create or update user
         User updatedUser;
         if (user == null) {
-            String userName = currentUser.getDisplayName() != null ?
-                    currentUser.getDisplayName() : "Người dùng";
             updatedUser = new User(
-                    userName,
+                    name,
                     age,
                     gender,
                     weight,
@@ -262,6 +278,7 @@ public class EditProfileBottomSheet extends BottomSheetDialogFragment {
                     activityFactor
             );
         } else {
+            user.setName(name);
             user.setGender(gender);
             user.setWeight(weight);
             user.setHeight(height);
@@ -271,8 +288,9 @@ public class EditProfileBottomSheet extends BottomSheetDialogFragment {
             updatedUser = user;
         }
 
-        // Tạo map chứa các trường cần cập nhật
+        // Prepare updates for Firestore
         Map<String, Object> updates = new HashMap<>();
+        updates.put("name", name);
         updates.put("gender", gender);
         updates.put("weight", weight);
         updates.put("height", height);
@@ -280,36 +298,75 @@ public class EditProfileBottomSheet extends BottomSheetDialogFragment {
         updates.put("activityLevel", activityLevel);
         updates.put("activityFactor", activityFactor);
 
-        // Cập nhật chỉ các trường được chỉ định, không ghi đè toàn bộ document
+        // Tạo một biến final context để sử dụng trong callback
+        final Context context = getContext();
+
+        // Update Firestore
         db.collection("users")
                 .document(currentUser.getUid())
                 .update(updates)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(requireContext(), "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
-                    if (listener != null) {
-                        listener.onProfileUpdated(updatedUser);
-                    }
-                    dismiss();
+                    if (!isAdded() || context == null) return; // Kiểm tra lại trước khi xử lý callback
+
+                    updateAuthProfileName(name, () -> {
+                        if (!isAdded() || context == null) return;
+
+                        Toast.makeText(context, "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
+                        if (listener != null) {
+                            listener.onProfileUpdated(updatedUser);
+                        }
+                        dismiss();
+                    });
                 })
                 .addOnFailureListener(e -> {
-                    // Nếu update thất bại do document chưa tồn tại, thử tạo mới
+                    if (!isAdded() || context == null) return;
+
                     if (e.getMessage() != null && e.getMessage().contains("No document to update")) {
+                        // Create new document if doesn't exist
                         db.collection("users")
                                 .document(currentUser.getUid())
                                 .set(updatedUser)
-                                .addOnSuccessListener(aVoid1 -> {
-                                    Toast.makeText(requireContext(), "Tạo mới thông tin thành công", Toast.LENGTH_SHORT).show();
-                                    if (listener != null) {
-                                        listener.onProfileUpdated(updatedUser);
-                                    }
-                                    dismiss();
+                                .addOnSuccessListener(aVoid -> {
+                                    if (!isAdded() || context == null) return;
+
+                                    updateAuthProfileName(name, () -> {
+                                        if (!isAdded() || context == null) return;
+
+                                        Toast.makeText(context, "Tạo mới thông tin thành công", Toast.LENGTH_SHORT).show();
+                                        if (listener != null) {
+                                            listener.onProfileUpdated(updatedUser);
+                                        }
+                                        dismiss();
+                                    });
                                 })
                                 .addOnFailureListener(e1 -> {
-                                    Toast.makeText(requireContext(), "Lỗi: " + e1.getMessage(), Toast.LENGTH_SHORT).show();
+                                    if (isAdded() && context != null) {
+                                        Toast.makeText(context, "Lỗi: " + e1.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
                                 });
-                    } else {
-                        Toast.makeText(requireContext(), "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else if (isAdded() && context != null) {
+                        Toast.makeText(context, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
+                });
+    }
+
+    private void updateAuthProfileName(String name, Runnable onComplete) {
+        if (currentUser == null || !isAdded()) {
+            return;
+        }
+
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name)
+                .build();
+
+        currentUser.updateProfile(profileUpdates)
+                .addOnCompleteListener(task -> {
+                    if (!isAdded()) return;
+
+                    if (!task.isSuccessful()) {
+                        Log.e("EditProfile", "Failed to update auth profile name", task.getException());
+                    }
+                    onComplete.run();
                 });
     }
 }

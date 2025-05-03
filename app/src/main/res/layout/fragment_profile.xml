@@ -56,15 +56,31 @@
                     android:padding="16dp">
 
                     <FrameLayout
+                        android:id="@+id/photo_container"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:background="?attr/selectableItemBackgroundBorderless">
 
                         <ImageView
                             android:id="@+id/ivProfileImage"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
+                            android:layout_width="72dp"
+                            android:layout_height="72dp"
+                            android:scaleType="centerCrop"
                             android:src="@drawable/ic_profile"
-                            app:tint="#4CA5E3" />
+                            android:background="@drawable/circle_background_white"/>
+                        <!-- Thêm ImageView check -->
+                        <ImageView
+                            android:id="@+id/ivEditPhoto"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="bottom|end"
+                            android:src="@drawable/ic_edit"
+                            android:background="@drawable/circle_background"
+                            android:padding="6dp"
+                            android:foreground="?attr/selectableItemBackgroundBorderless"
+                            android:clickable="true"
+                            android:focusable="true"/>
                     </FrameLayout>
 
                     <LinearLayout
@@ -219,104 +235,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
-            <!-- Measurements Card -->
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="8dp"-->
-<!--                app:cardCornerRadius="8dp"-->
-<!--                app:cardElevation="2dp">-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical"-->
-<!--                    android:padding="16dp">-->
-
-<!--                    &lt;!&ndash; Chest &ndash;&gt;-->
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:orientation="horizontal"-->
-<!--                        android:paddingVertical="8dp">-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:text="vòng ngực"-->
-<!--                            android:textColor="#000000"-->
-<!--                            android:textSize="16sp" />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/tvChest"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="cm"-->
-<!--                            android:textColor="#757575"-->
-<!--                            android:textSize="16sp" />-->
-<!--                    </LinearLayout>-->
-
-<!--                    <View-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="1dp"-->
-<!--                        android:background="#E0E0E0" />-->
-
-<!--                    &lt;!&ndash; Waist &ndash;&gt;-->
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:orientation="horizontal"-->
-<!--                        android:paddingVertical="8dp">-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:text="vòng eo"-->
-<!--                            android:textColor="#000000"-->
-<!--                            android:textSize="16sp" />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/tvWaist"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="cm"-->
-<!--                            android:textColor="#757575"-->
-<!--                            android:textSize="16sp" />-->
-<!--                    </LinearLayout>-->
-
-<!--                    <View-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="1dp"-->
-<!--                        android:background="#E0E0E0" />-->
-
-<!--                    &lt;!&ndash; Hip &ndash;&gt;-->
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:orientation="horizontal"-->
-<!--                        android:paddingVertical="8dp">-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:text="vòng mông"-->
-<!--                            android:textColor="#000000"-->
-<!--                            android:textSize="16sp" />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/tvHip"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="cm"-->
-<!--                            android:textColor="#757575"-->
-<!--                            android:textSize="16sp" />-->
-<!--                    </LinearLayout>-->
-<!--                </LinearLayout>-->
-<!--            </androidx.cardview.widget.CardView>-->
 
             <!-- Activity Level Card -->
             <androidx.cardview.widget.CardView

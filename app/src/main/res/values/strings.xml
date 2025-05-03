@@ -15,7 +15,31 @@
         <item>Vận động rất nhiều</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="permission_required_title">Cần quyền truy cập</string>
+    <string name="permission_required_message">Ứng dụng cần quyền truy cập ảnh và camera để thay đổi ảnh đại diện</string>
+    <string name="agree">Đồng ý</string>
+    <string name="cancel">Hủy</string>
+    <string name="choose_image_source">Chọn ảnh từ</string>
+    <string name="take_photo">Chụp ảnh mới</string>
+    <string name="choose_from_gallery">Chọn từ thư viện</string>
+    <string name="upload_failed">Tải ảnh lên thất bại: </string>
+    <string name="upload_success">Cập nhật ảnh thành công</string>
+    <string name="save_image_failed">Lỗi khi lưu ảnh</string>
+    <string name="permission_denied_title">Quyền bị từ chối</string>
+    <string name="permission_denied_message">Bạn cần cấp quyền để sử dụng tính năng này</string>
+    <string name="go_to_settings">Đến Cài đặt</string>
+    <string name="not_updated">Chưa cập nhật</string>
+    <string name="weight_status_empty">Tình trạng cân nặng: Chưa có dữ liệu</string>
+    <string name="weight_status_format">Tình trạng cân nặng: %1$s (%2$s)</string>
+    <string name="weight_format">%d kg</string>
+    <string name="height_format">%d cm</string>
+    <string name="age_format">%d tuổi</string>
+    <string name="underweight">Thiếu cân</string>
+    <string name="normal_weight">Bình thường</string>
+    <string name="overweight">Thừa cân</string>
+    <string name="obese">Béo phì</string>
+    <string name="default_user_name">Người dùng</string>
+    <string name="load_profile_error">Lỗi khi tải thông tin</string>
 
 </resources>
 
