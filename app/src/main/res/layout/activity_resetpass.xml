@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_blue">
+    android:background="@color/PinkLight">
 <!--    tools:context=".activity.ForgotPasswordActivity">-->
 
     <androidx.cardview.widget.CardView
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="KHÔI PHỤC MẬT KHẨU"
-                android:textColor="@color/dark_blue"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -42,7 +42,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="24dp"
-                android:background="@color/dark_blue" />
+                android:background="@color/Primary" />
 
             <EditText
                 android:id="@+id/etEmailReset"

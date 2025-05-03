@@ -112,10 +112,10 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-//    // Hàm kiểm tra đăng nhập (giả lập)
-//    private boolean checkLogin(String username, String password) {
-//        String validUsername = "user123";
-//        String validPassword = "pass123";
-//        return username.equals(validUsername) && password.equals(validPassword);
-//    }
+    // Hàm kiểm tra đăng nhập (giả lập)
+    private boolean checkLogin(String username, String password) {
+        String validUsername = "user123";
+        String validPassword = "pass123";
+        return username.equals(validUsername) && password.equals(validPassword);
+    }
 }

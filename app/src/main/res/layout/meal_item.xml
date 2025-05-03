@@ -56,14 +56,6 @@
             android:textStyle="bold" />
 
         <!-- Nút xoá -->
-        <ImageButton
-            android:id="@+id/deleteButton"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_delete"
-            android:contentDescription="Xoá bữa ăn"
-            android:layout_marginStart="4dp"
-            app:tint="#EF233C" />
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>
