@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +24,7 @@ import com.example.calories_caculator.adapter.MealAdapter;
 import com.example.calories_caculator.firebase.FirestoreHelper;
 import com.example.calories_caculator.model.Food;
 import com.example.calories_caculator.model.Meal;
+import com.example.calories_caculator.viewmodel.SharedViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
@@ -42,26 +44,24 @@ public class HomeFragment extends Fragment implements MealAdapter.OnMealDeleteLi
     private List<Meal> meals;
     private MealAdapter mealAdapter;
 
-    // Thay thế hằng số bằng biến
-    private int targetCalories = 2000; // Giá trị mặc định
-    private int warningCalories; // Sẽ được tính dựa trên targetCalories
+    private SharedViewModel sharedViewModel;
 
-    // SharedPreferences để lấy mục tiêu calories
+    private int targetCalories = 2000;
+    private int warningCalories;
+
     private SharedPreferences sharedPreferences;
     private static final String PREFS_NAME = "CaloriesPrefs";
     private static final String KEY_TARGET_CALORIES = "targetCalories";
-    private TextView tvMaxCalories; // TextView hiển thị giá trị max calories
+    private TextView tvMaxCalories;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Khởi tạo SharedPreferences
         sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -69,31 +69,22 @@ public class HomeFragment extends Fragment implements MealAdapter.OnMealDeleteLi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Initialize views
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
         initializeViews(view);
-
-        // Lấy mục tiêu calories từ SharedPreferences
         loadTargetCalories();
-
-        // Setup Firestore and adapters
         setupFirestore();
         setupAdapters();
-
-        // Setup click listeners
         setupClickListeners();
-
-        // Cập nhật UI với giá trị mục tiêu calories
         updateCaloriesUI();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        // Tải lại mục tiêu calories mỗi khi fragment được hiển thị
-        // để đảm bảo cập nhật nếu người dùng thay đổi mục tiêu trong InfoFragment
         loadTargetCalories();
         updateCaloriesUI();
-        updateTotalCalories(); // Cập nhật lại tổng calories hiển thị
+        updateTotalCalories();
     }
 
     private void initializeViews(View view) {
@@ -104,27 +95,22 @@ public class HomeFragment extends Fragment implements MealAdapter.OnMealDeleteLi
         addFoodButton = view.findViewById(R.id.addFoodButton);
         statusButton = view.findViewById(R.id.statusBotton);
         mealsRecyclerView = view.findViewById(R.id.mealsList);
-        tvMaxCalories = view.findViewById(R.id.tvMaxCalories); // TextView hiển thị giá trị max calories
+        tvMaxCalories = view.findViewById(R.id.tvMaxCalories);
     }
 
     private void loadTargetCalories() {
-        // Lấy mục tiêu calories từ SharedPreferences
         targetCalories = sharedPreferences.getInt(KEY_TARGET_CALORIES, 2000);
-        // Tính toán ngưỡng cảnh báo (khoảng 60% của mục tiêu)
         warningCalories = (int) (targetCalories * 0.6);
     }
 
     private void updateCaloriesUI() {
-        // Cập nhật giá trị tối đa cho các thanh tiến trình
         caloriesProgress.setMax(targetCalories);
         caloriesBar.setMax(targetCalories);
 
-        // Cập nhật TextView hiển thị giá trị max calories
         if (tvMaxCalories != null) {
             tvMaxCalories.setText(String.valueOf(targetCalories));
         }
 
-        // Cập nhật text hiển thị calories
         int currentCalories = 0;
         if (mealAdapter != null) {
             currentCalories = mealAdapter.getTotalCalories();
@@ -137,10 +123,22 @@ public class HomeFragment extends Fragment implements MealAdapter.OnMealDeleteLi
     }
 
     private void setupAdapters() {
-        meals = new ArrayList<>();
-        mealAdapter = new MealAdapter(meals, this);
         mealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mealsRecyclerView.setAdapter(mealAdapter);
+
+        sharedViewModel.getMealsLiveData().observe(getViewLifecycleOwner(), updatedMeals -> {
+            meals = updatedMeals;
+
+            if (mealAdapter == null) {
+                mealAdapter = new MealAdapter(meals, this);
+                mealsRecyclerView.setAdapter(mealAdapter);
+            } else
+            {
+                mealAdapter.setMeals(meals);
+                mealAdapter.notifyDataSetChanged();
+            }
+
+            updateTotalCalories();
+        });
     }
 
     private void setupClickListeners() {
@@ -185,40 +183,25 @@ public class HomeFragment extends Fragment implements MealAdapter.OnMealDeleteLi
         dialog.show();
     }
 
-    private void addOrUpdateMeal(Food food) {
-        boolean mealExists = false;
-        for (Meal meal : meals) {
-            if (meal.getName().equals(food.getName())) {
-                meal.incrementQuantity();
-                mealExists = true;
-                break;
-            }
-        }
-
-        if (!mealExists) {
-            meals.add(new Meal(food.getName(), 1, food.getCalories(), food.getImageUrl()));
-        }
-
-        mealAdapter.notifyDataSetChanged();
+    private void addOrUpdateMeal(Food food)
+    {
+        sharedViewModel.addOrUpdateMeal(new Meal(food.getName(), 1, food.getCalories(), food.getImageUrl()));
     }
 
     @Override
     public void onMealDeleted(int position) {
-        meals.remove(position);
-        mealAdapter.notifyItemRemoved(position);
-        updateTotalCalories();
+        sharedViewModel.removeMeal(position);
     }
 
     private void updateTotalCalories() {
-        int total = mealAdapter.getTotalCalories();
+        int total = 0;
+        if (mealAdapter != null) {
+            total = mealAdapter.getTotalCalories();
+        }
         totalCalories.setText("TỔNG CỘNG: " + total + " kcal");
-
-        // Update progress indicators
         caloriesProgress.setProgress(total);
         caloriesBar.setProgress(total);
         caloriesCount.setText(total + "/" + targetCalories);
-
-        // Update colors based on calories
         updateProgressColors(total);
     }
 
