@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.calories_caculator.R;
@@ -19,6 +20,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText etUsername, etPassword;
     private Button btnLogin, btnRegister;
+
+    private TextView tvForgotPassword;
     FirebaseAuth mAuth;
 
     Animation scaleUp, scaleDown;
@@ -35,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister= findViewById(R.id.btnRegister);
+        tvForgotPassword = findViewById(R.id.tvForgotPassword);
         mAuth = FirebaseAuth.getInstance();
 
 //        btnLogin.setEnabled(false);
@@ -110,6 +114,14 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
+        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
+            }
+        });
+
+
     }
 
     // Hàm kiểm tra đăng nhập (giả lập)

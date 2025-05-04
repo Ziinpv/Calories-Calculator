@@ -55,13 +55,23 @@
                 android:padding="16dp"
                 android:textColorHint="#78909C" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSendReset"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:background="@drawable/green_button_background"
+                android:background="@drawable/custom_btn"
                 android:text="Gửi liên kết đặt lại mật khẩu"
                 android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBack"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_btn"
+                android:text="Quay lại"
+                android:textColor="@color/white"
+                android:layout_marginTop="8dp"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
