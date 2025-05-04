@@ -61,6 +61,9 @@ dependencies {
     implementation(libs.imagepicker)
     implementation(libs.firebase.storage)
     implementation("com.github.dhaval2404:imagepicker:2.1")
+    implementation(libs.cloudinary.android)
+    implementation(libs.cloudinary.core)
+    implementation(libs.okhttp)
     // Retrofit + GSON
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")

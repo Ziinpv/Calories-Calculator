@@ -29,16 +29,29 @@
                 app:cardCornerRadius="8dp"
                 app:cardElevation="2dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#FFFFFF"
-                    android:gravity="center"
-                    android:padding="16dp"
-                    android:text="HỒ SƠ THỂ CHẤT"
-                    android:textColor="#000000"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:text="HỒ SƠ THỂ CHẤT"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_next"/>
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <!-- Profile Card -->
@@ -68,7 +81,10 @@
                             android:layout_height="72dp"
                             android:scaleType="centerCrop"
                             android:src="@drawable/ic_profile"
-                            android:background="@drawable/circle_background_white"/>
+                            android:background="@drawable/circle_background_white"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?attr/selectableItemBackgroundBorderless"/>
                         <!-- Thêm ImageView check -->
                         <ImageView
                             android:id="@+id/ivEditPhoto"
@@ -331,6 +347,17 @@
                         android:textSize="14sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+            <!-- Logout Button -->
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#FF5252"
+                android:text="Đăng xuất"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

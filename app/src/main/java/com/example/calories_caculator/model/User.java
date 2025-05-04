@@ -8,14 +8,13 @@ public class User {
     private int weight;
     private String activity_level;
     private double activity_factor;
-    private String imageUrl; // Thêm trường cho URL ảnh đại diện
+    private String profileImageUrl;
+    private String goal;
 
     // Constructor rỗng cần thiết cho Firestore
-    public User() {
-    }
+    public User() {}
 
-    public User(String name, int age, String gender, int weight, int height,
-                String activity_level, double activity_factor, String imageUrl) {
+    public User(String name, int age, String gender, int weight, int height, String activity_level, double activity_factor) {
         this.name = name;
         this.age = age;
         this.gender = gender;
@@ -23,84 +22,44 @@ public class User {
         this.height = height;
         this.activity_level = activity_level;
         this.activity_factor = activity_factor;
-        this.imageUrl = imageUrl;
     }
 
     // Overloaded constructor for backward compatibility
-    public User(String name, int age, String gender, int weight, int height,
-                String activity_level, double activity_factor) {
-        this(name, age, gender, weight, height, activity_level, activity_factor, null);
-    }
-
-    // Overloaded constructor for backward compatibility
-    public User(String name, int age, String gender, int weight, int height,
-                String activity_level) {
-        this(name, age, gender, weight, height, activity_level, 1.2, null); // Default to sedentary
+    public User(String name, int age, String gender, int weight, int height, String activity_level) {
+        this(name, age, gender, weight, height, activity_level, 1.2); // Default to sedentary
     }
 
     // Getters và Setters
-    public String getName() {
-        return name;
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public int getAge() { return age; }
+    public void setAge(int age) { this.age = age; }
+
+    public String getGender() { return gender; }
+    public void setGender(String gender) { this.gender = gender; }
+
+    public double getWeight() { return weight; }
+    public void setWeight(int weight) { this.weight = weight; }
+
+    public double getHeight() { return height; }
+    public void setHeight(int height) { this.height = height; }
+
+    public String getActivityLevel() { return activity_level; }
+    public void setActivityLevel(String activity_level) { this.activity_level = activity_level; }
+
+    public double getActivityFactor() { return activity_factor; }
+    public void setActivityFactor(double activity_factor) { this.activity_factor = activity_factor; }
+
+    // Profile image URL getter and setter
+    public String getProfileImageUrl() { return profileImageUrl; }
+    public void setProfileImageUrl(String profileImageUrl) { this.profileImageUrl = profileImageUrl; }
+
+    public String getGoal() {
+        return goal;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public String getActivityLevel() {
-        return activity_level;
-    }
-
-    public void setActivityLevel(String activity_level) {
-        this.activity_level = activity_level;
-    }
-
-    public double getActivityFactor() {
-        return activity_factor;
-    }
-
-    public void setActivityFactor(double activity_factor) {
-        this.activity_factor = activity_factor;
-    }
-
-    // Thêm getter và setter cho imageUrl
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setGoal(String goal) {
+        this.goal = goal;
     }
 }

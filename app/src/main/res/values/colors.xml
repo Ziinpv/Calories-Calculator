@@ -11,4 +11,7 @@
     <color name="Accent">#FFFFFFFF</color>
     <color name="Pink">#F7CFD8</color>
     <color name="PinkLight">#FFEDFA</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
 </resources>
